@@ -3,10 +3,10 @@ import { User, Thought } from '../models/index';
 const cleanDB = async (): Promise<void> => {
   try {
     await User.deleteMany({});
-    console.log('Course collection cleaned.');
+    console.log('User collection cleaned.');
 
     await Thought.deleteMany({});
-    console.log('Student collection cleaned.');
+    console.log('Thought collection cleaned.');
 
   } catch (err) {
     console.error('Error cleaning collections:', err);
