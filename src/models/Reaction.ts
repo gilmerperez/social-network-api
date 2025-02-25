@@ -1,14 +1,16 @@
-import { Schema, type Document, Types } from 'mongoose';
+import { Schema, Types, Document, ObjectId } from 'mongoose';
 
-// Reaction Interface (SCHEMA ONLY)
+// Reaction Model (SCHEMA ONLY)
+
+// Reaction Interface
 interface IReaction extends Document {
-  reactionId: Schema.Types.ObjectId;
+  reactionId: ObjectId;
   reactionBody: string;
   username: string;
   createdAt: Date;
 }
 
-// Reaction Schema
+// Schema to create Reaction model
 const reactionSchema = new Schema<IReaction>(
   {
     reactionId: {
@@ -26,14 +28,15 @@ const reactionSchema = new Schema<IReaction>(
     },
     createdAt: {
       type: Date,
-      default: () => new Date(),
+      default: () => new Date(), // Set default value to current timestamp
+      get: (createdAt: Date) => createdAt // Getter method to format timestamp on query
     },
   },
   {
     toJSON: {
-      virtuals: true,
+      getters: true,
     },
-    timestamps: true
+    id: false,
   },
 );
 

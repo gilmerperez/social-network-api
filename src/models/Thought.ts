@@ -10,7 +10,7 @@ interface IThought extends Document {
   reactionCount(): number;
 }
 
-// Thought Schema
+// Schema to create Thought model
 const thoughtSchema = new Schema<IThought>(
   {
     thoughtText: {
@@ -21,30 +21,35 @@ const thoughtSchema = new Schema<IThought>(
     },
     createdAt: {
       type: Date,
-      default: () => new Date(), // Fix: Ensure default returns Date object
-      get: (createdAt: Date) => createdAt
+      default: () => new Date(), // Set default value to current timestamp
+      get: (createdAt: Date) => createdAt // Getter method to format timestamp on query
     },
+    // The user that created this thought
     username: {
       type: String,
       required: true
     },
+    // These are like replies
     reactions: {
       type: [reactionSchema]
     },
   },
   {
     toJSON: {
+      // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
       virtuals: true,
-      getters: true, // This is so that we make sure the getters are included in the JSON output
+      // This is so that we make sure the getters are included in the JSON output
+      getters: true,
     },
-    timestamps: true
+    id: false,
   },
 );
 
 // Create a virtual called reactionCount that retrieves the length of the thought's reactions array field on query.
-thoughtSchema.virtual('reactionCount').get(function () {
-  return this.reactions.length; // Returns the number of reactions in the array
-});
+thoughtSchema.virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  });
 
 const Thought = model<IThought>('Thought', thoughtSchema);
 

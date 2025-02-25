@@ -1,13 +1,15 @@
-import { Schema, model, type Document, Types } from 'mongoose';
+import { Schema, model, type Document, ObjectId } from 'mongoose';
 
+// User Interface
 interface IUser extends Document {
   username: string,
   email: string,
-  thoughts: Types.ObjectId[];
-  friends: Types.ObjectId[];
+  thoughts: ObjectId[];
+  friends: ObjectId[];
   friendCount(): number;
 }
 
+// Schema to create User model
 const userSchema = new Schema<IUser>(
   {
     username: {
@@ -20,12 +22,15 @@ const userSchema = new Schema<IUser>(
       type: String,
       unique: true,
       required: true,
+      // Mongoose's matching validation
       match: [/\S+@\S+\.\S+/, 'Please enter a valid email address']
     },
+    // Array of _id values referencing the Thought model
     thoughts: [{
       type: Schema.Types.ObjectId,
       ref: 'Thought'
     }],
+    // Array of _id values referencing the User model (self-reference)
     friends: [{
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -33,16 +38,18 @@ const userSchema = new Schema<IUser>(
   },
   {
     toJSON: {
+      // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
       virtuals: true,
     },
-    timestamps: true
+    id: false,
   },
 );
 
 // Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
-userSchema.virtual('friendCount').get(function() {
-  return this.friends.length;
-});
+userSchema.virtual('friendCount')
+  .get(function () {
+    return this.friends.length;
+  });
 
 const User = model<IUser>('User', userSchema);
 
