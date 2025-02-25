@@ -1,4 +1,4 @@
-import { Schema, model, type Document, Types } from 'mongoose';
+import { Schema, model, type Document } from 'mongoose';
 import reactionSchema from "./Reaction";
 
 // Thought Interface
