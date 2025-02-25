@@ -1,11 +1,11 @@
-import { Schema, model, type Document } from 'mongoose';
+import { Schema, model, type Document, Types } from 'mongoose';
 
 interface IUser extends Document {
   username: string,
   email: string,
-  thoughts: Thought[],
-  friends: User[],
-  reactionCount(): void;
+  thoughts: Types.ObjectId[];
+  friends: Types.ObjectId[];
+  friendCount(): number;
 }
 
 const userSchema = new Schema<IUser>(
@@ -20,17 +20,16 @@ const userSchema = new Schema<IUser>(
       type: String,
       unique: true,
       required: true,
-      validate: {
-        validator: () => Promise.resolve(false),
-        message: 'Email validation failed'
-      }
+      match: [/\S+@\S+\.\S+/, 'Please enter a valid email address']
     },
-    thoughts: {
-      type: Date
-    },
-    friends: {
-      type: Date
-    },
+    thoughts: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Thought'
+    }],
+    friends: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
   },
   {
     toJSON: {
@@ -41,7 +40,9 @@ const userSchema = new Schema<IUser>(
 );
 
 // Create a virtual called friendCount that retrieves the length of the user's friends array field on query.
-userSchema.methods.reactionCount = function () {};
+userSchema.virtual('friendCount').get(function() {
+  return this.friends.length;
+});
 
 const User = model<IUser>('User', userSchema);
 
