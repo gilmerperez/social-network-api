@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
-// Import user controller functions
+// Import thought controller functions
 
 router.get('/', (_req, res) => res.send('User route working!'));
 
