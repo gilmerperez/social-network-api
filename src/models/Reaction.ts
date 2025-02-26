@@ -15,7 +15,7 @@ const reactionSchema = new Schema<IReaction>(
   {
     reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId()
+      default: () => new Types.ObjectId() // Auto-generate ObjectId
     },
     reactionBody: {
       type: String,
@@ -34,9 +34,9 @@ const reactionSchema = new Schema<IReaction>(
   },
   {
     toJSON: {
-      getters: true,
+      getters: true, // Apply getters in JSON output
     },
-    id: false,
+    id: false, // Prevent default virtual 'id' creation
   },
 );
 
