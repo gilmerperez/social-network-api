@@ -1,7 +1,8 @@
 import express from 'express';
-import routes from './routes/index.js';
-import db from './config/connection.js';
+import routes from './routes/index.js'; // Import API routes from the routes folder
+import db from './config/connection.js'; // Import the database connection
 
+// Wait to connect to database before continuing
 await db();
 
 const PORT = process.env.PORT || 3001;
