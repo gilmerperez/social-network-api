@@ -45,7 +45,7 @@ export const createUser = async (req: Request, res: Response) => {
 
 // PUT a user by _id
 // http://localhost:3001/api/users/_id
-// export const updateUser = async (req: Request, res: Response) => {}
+export const updateUser = async (_req: Request, _res: Response) => {}
 
 // DELETE a user by _id
 // http://localhost:3001/api/users/_id
@@ -69,6 +69,8 @@ export const deleteUser = async (req: Request, res: Response) => {
 // ! FRIENDS
 // POST a new friend to a user's friend list
 // http://localhost:3001/api/users/:userId/friends/:friendId
+export const addFriend = async (_req: Request, _res: Response) => {}
 
 // DELETE a friend from a user's friend list
 // http://localhost:3001/api/users/:userId/friends/:friendId
+export const removeFriend = async (_req: Request, _res: Response) => {}
