@@ -7,11 +7,11 @@ import { Thought, User } from "../models/index";
 export const getThoughts = async (_req: Request, res: Response) => {
   try {
     const thoughts = await Thought.find(); // Retrieve all thoughts
-    res.json(thoughts); // Return found thoughts as JSON
+    return res.json(thoughts); // Return found thoughts as JSON
   } catch (err) {
-    res.status(500).json(err);
+    return res.status(500).json(err);
   }
-}
+};
 
 // GET a thought by _id
 // http://localhost:3001/api/thoughts/_id
@@ -23,13 +23,11 @@ export const getSingleThought = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'No thought with that ID' });
     }
 
-    res.json(thought); // Return found thought
-    return;
+    return res.json(thought); // Return found thought
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
 
 // POST a new thought
 // http://localhost:3001/api/thoughts
@@ -46,14 +44,12 @@ export const createThought = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Thought created, but found no user with that ID' })
     }
 
-    res.json('Created a new thought 🎉'); // Confirm successful creation
-    return;
+    return res.json('Created a new thought 🎉'); // Confirm successful creation
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
 
 // PUT a thought by _id
 // http://localhost:3001/api/thoughts/_id
@@ -69,14 +65,12 @@ export const updateThought = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'No thought with this ID!' });
     }
 
-    res.json(thought);
-    return;
+    return res.json(thought);
   } catch (err) {
     console.log(err);
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
 
 // DELETE a thought by _id
 // http://localhost:3001/api/thoughts/_id
@@ -98,13 +92,11 @@ export const deleteThought = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Thought created but no user with this ID!' });
     }
 
-    res.json({ message: 'Thought successfully deleted!' });
-    return;
+    return res.json({ message: 'Thought successfully deleted!' });
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
 
 // ! REACTIONS
 // POST a reaction stored in a single thought's reactions array field
@@ -121,13 +113,11 @@ export const addReaction = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'No thought with this ID!' });
     }
 
-    res.json(thought); // Return updated application with the new tag
-    return;
+    return res.json(thought); // Return updated application with the new tag
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
 
 // DELETE a reaction by the reaction's reactionId value
 // http://localhost:3001/api/thoughts/:thoughtId/reactions
@@ -143,10 +133,8 @@ export const removeReaction = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'No thought with this ID!' });
     }
 
-    res.json(thought); // Return updated thought without the removed reaction
-    return;
+    return res.json(thought); // Return updated thought without the removed reaction
   } catch (err) {
-    res.status(500).json(err);
-    return;
+    return res.status(500).json(err);
   }
-}
+};
