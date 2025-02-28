@@ -1,5 +1,5 @@
-import { Schema, model, type Document } from 'mongoose';
-import { Reaction } from '.';
+import { Schema, model, Document } from 'mongoose';
+import Reaction from './Reaction';
 import reactionSchema from './Reaction';
 
 // Thought Interface

@@ -1,4 +1,4 @@
-import { Schema, model, type Document, ObjectId } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 
 // User Interface
 interface IUser extends Document {
