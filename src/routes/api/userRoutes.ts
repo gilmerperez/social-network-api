@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 // Import user controller functions
-import { getUsers, getSingleUser, createUser, updateUser, deleteUser, addFriend, removeFriend } from '../../controllers/userController'
+import { getUsers, getSingleUser, createUser, updateUser, deleteUser, addFriend, removeFriend } from '../../controllers/userController.js'
 
 // * Routes for user operations
 router.get('/', getUsers); // GET all users - Retrieves a list of all users from the database

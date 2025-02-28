@@ -2,8 +2,8 @@ import { Router } from 'express';
 const router = Router();
 
 // Import route handlers for users and thoughts
-import userRoutes from './userRoutes';
-import thoughtRoutes from './thoughtRoutes';
+import userRoutes from './userRoutes.js';
+import thoughtRoutes from './thoughtRoutes.js';
 
 router.use('/users', userRoutes); // Define `/api/users` to handle user-related routes
 router.use('/thoughts', thoughtRoutes); // Define `/api/thoughts` to handle thought-related routes

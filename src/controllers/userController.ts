@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User, Thought } from "../models/index";
+import { User, Thought } from "../models/index.js";
 
 // ! USERS
 // GET all users http://localhost:3001/api/users

@@ -2,7 +2,7 @@ import { Router } from 'express';
 const router = Router();
 
 // Import thought controller functions
-import { getThoughts, getSingleThought, createThought, updateThought, deleteThought, addReaction, removeReaction } from '../../controllers/thoughtController';
+import { getThoughts, getSingleThought, createThought, updateThought, deleteThought, addReaction, removeReaction } from '../../controllers/thoughtController.js';
 
 // * Routes for thought operations
 router.get('/', getThoughts); // GET all thoughts - Retrieves a list of all thoughts from the database
