@@ -1,51 +1,60 @@
-import connection from '../config/connection.js';
-import { User, Thought } from '../models/index.js';
-import { getRandomName, getRandomThought } from './data.js';
+// import connection from '../config/connection.js';
+// import { User, Thought } from '../models/index.js';
+// import { getRandomUsers, getRandomThoughts } from './data.js';
 
-connection.on('error', (err) => err);
+// const seedDatabase = async () => {
+//   try {
+//     connection.once('open', async () => {
+//       console.log('Connected to database');
 
-// Once connected, begin seeding process
-connection.once('open', async () => {
-  console.log('connected');
+//       // Clear existing data
+//       await User.deleteMany({});
+//       await Thought.deleteMany({});
+//       console.log('Database cleared');
 
-  // Delete the 'thought' collection if it exists
-  let thoughtCheck = await connection.db?.listCollections({ name: 'thoughts' }).toArray();
-  if (thoughtCheck?.length) {
-    await connection.dropCollection('thoughts');
-  }
+//       // Generate users and thoughts dynamically
+//       const users = getRandomUsers(10); // Generate 10 users
+//       const thoughts = getRandomThoughts(20); // Generate 20 thoughts
 
-  // Delete the 'users' collection if it exists
-  let userCheck = await connection.db?.listCollections({ name: 'users' }).toArray();
-  if (userCheck?.length) {
-    await connection.dropCollection('users');
-  }
+//       // Insert users and explicitly type the result
+//       const createdUsers = await User.insertMany(users) as Array<{ _id: string; username: string }>;
+//       console.log('Users seeded');
 
-  // Create an array to store user data
-  const users = [];
-  // Generate 10 random thoughts
-  const thoughts = getRandomThought(10);
+//       // Map usernames to their _id for thought references
+//       const userMap = createdUsers.reduce((acc, user) => {
+//         acc[user.username] = user._id; // Now TypeScript knows user.username and user._id exist
+//         return acc;
+//       }, {} as Record<string, string>);
 
-  // Generate 20 random users with names and ages
-  for (let i = 0; i < 20; i++) {
-    const fullName = getRandomName();
-    const first = fullName.split(' ')[0]; // Extract first name
-    const last = fullName.split(' ')[1]; // Extract last name
+//       // Attach thoughts to users and insert
+//       for (const thought of thoughts) {
+//         const userId = userMap[thought.username];
+//         if (userId) {
+//           const createdThought = await Thought.create({ ...thought, userId });
+//           await User.findByIdAndUpdate(userId, { $push: { thoughts: createdThought._id } });
+//         }
+//       }
+//       console.log('Thoughts seeded');
 
-    users.push({
-      first,
-      last,
-      age: Math.floor(Math.random() * (99 - 18 + 1) + 18), // Generate random age between 18 and 99
-    });
-  }
+//       // Establish random friendships
+//       for (const user of createdUsers) {
+//         const friendIds = createdUsers
+//           .filter((u) => (u as { _id: string })._id !== user._id) // Ensure TypeScript recognizes _id
+//           .sort(() => 0.5 - Math.random()) // Shuffle
+//           .slice(0, Math.floor(Math.random() * 4) + 1) // Random selection
+//           .map((u) => (u as { _id: string })._id);
 
-  // Insert generated users into the database
-  await User.insertMany(users);
-  // Insert generated thoughts into the database
-  await Thought.insertMany(thoughts);
+//         await User.findByIdAndUpdate(user._id, { $push: { friends: { $each: friendIds } } });
+//       }
+//       console.log('Friendships established');
 
-  // Loop through the saved thoughts, for each thought we need to generate a thought response and insert the thought responses
-  console.table(users);
-  console.table(thoughts);
-  console.info('Seeding complete! 🌱');
-  process.exit(0);
-});
+//       console.log('Database seeding complete');
+//       process.exit(0);
+//     });
+//   } catch (err) {
+//     console.error('Error seeding database:', err);
+//     process.exit(1);
+//   }
+// };
+
+// seedDatabase();
